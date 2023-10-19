@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, ipcMain, BrowserWindow } = require("electron");
 const { join } = require("path");
 
 app.whenReady().then(() => {
@@ -9,4 +9,9 @@ app.whenReady().then(() => {
   });
   window.loadFile("index.html");
   window.webContents.openDevTools();
+});
+
+ipcMain.addListener("my-button-click", () => {
+  console.log("Event received: my-button-click");
+  app.setBadgeCount(app.getBadgeCount() + 1);
 });
